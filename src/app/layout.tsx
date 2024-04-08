@@ -2,6 +2,7 @@ import { Header } from "@/components/header";
 import { Mulish } from "next/font/google";
 
 import "./globals.css";
+import { FilterContextProvider } from "@/contexts/filter-context";
 
 const mulish  = Mulish({
     weight:['300','400','500','600'],
@@ -21,7 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={mulish.className}>
+        <FilterContextProvider>
         <Header/>
+        {children}
+        </FilterContextProvider>
       </body>
     </html>
   )
