@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 
 const InputContainer = styled.div`
   position: relative;
-  max-width: 1206px;
+  max-width: 1046px;
   width: 100%;
   margin: 147px auto 0; /* Ajusta a margem para posicionar o input mais para baixo */
 `;

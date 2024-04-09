@@ -12,7 +12,7 @@ interface FilterBarProps {
 
 const FilterContainer = styled.div`
     display: flex;
-    max-width: 1206px;
+    max-width: 1046px;
     width: 100%;
     align-items: start;
     justify-content: space-between;
