@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { styled } from "styled-components"
 import { PrimaryInputWSearchIcon } from "./primary-input";
+import { useFilter } from "@/hooks/useFilter";
 
 interface HeaderProps{
 }
@@ -43,6 +44,8 @@ const StyledImage = styled(Image)`
 `;
 
 export function Header(props : HeaderProps){
+  const{setSearch , search} = useFilter();
+
     return(
         <HeaderBase>
            <TagHeader>
@@ -54,7 +57,10 @@ export function Header(props : HeaderProps){
             />
            </TagHeader>
            <BackgroundImage>
-             <PrimaryInputWSearchIcon  type="text" placeholder="Digite aqui sua busca..." />
+             <PrimaryInputWSearchIcon 
+             value={search}
+             handleChange={setSearch}
+              type="text" placeholder="Digite aqui sua busca..." />
            </BackgroundImage>
         </HeaderBase>
         

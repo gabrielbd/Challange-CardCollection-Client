@@ -101,11 +101,11 @@ export function FilterBar(props: FilterBarProps) {
         <ResultText>Resultado de busca</ResultText>
         <FilterContainerPriority>
             <button onClick={handleOpen}>
-                Organizar por
+                Filtrar por Status
             </button>
             {isOpen && 
             <PriorityFilter>
-                <li onClick={() => handleChangeType(FilterType.ALL)}>Sem ordenação</li>
+                <li onClick={() => handleChangeType(FilterType.ALL)}>Sem Filtro</li>
                 <li onClick={() => handleChangeType(FilterType.ACTIVATED)}>Cards - Ativados</li>
                 <li onClick={() => handleChangeType(FilterType.DISABLED)}>Cards - Desativados</li>
             </PriorityFilter>

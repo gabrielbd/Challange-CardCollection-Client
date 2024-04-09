@@ -35,12 +35,15 @@ const MagnifyingGlass = styled.img`
 `;
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  value : string,
+  handleChange: (value: string) => void
 }
 
 export function PrimaryInputWSearchIcon(props: InputProps){
     return (
       <InputContainer>
         <PrimaryInput 
+          onChange={(event) => props.handleChange(event.target.value)} 
           {...props}
         />
         <MagnifyingGlass src="/lupa.svg" alt="Lupa" />
