@@ -25,6 +25,11 @@ const ResultText = styled.span`
   letter-spacing: 0px;
   color: #5f1478;
   opacity: 1;
+
+  @media (max-width: 767px) {
+     font-size: 25px;
+     line-height:35px;
+}
 `;
 
 const NewCardButton = styled.button`
@@ -43,6 +48,12 @@ const NewCardButton = styled.button`
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+    width: 103px;
+}
+
 `;
 const FilterContainerPriority = styled.div`
 button {
@@ -60,6 +71,10 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 767px) {
+        display: none;
+    }
 }
 `;
 const PriorityFilter = styled.ul`

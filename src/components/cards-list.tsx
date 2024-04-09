@@ -11,7 +11,11 @@ const ListContainer = styled.div`
     grid-template-columns: repeat(4, 234px);
     grid-gap: 32px;
     margin-top: 35px;
-`
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+    }
+`;
 
 
 interface CardsListProps{

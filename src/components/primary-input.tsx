@@ -6,7 +6,12 @@ const InputContainer = styled.div`
   position: relative;
   max-width: 1046px;
   width: 100%;
-  margin: 147px auto 0; /* Ajusta a margem para posicionar o input mais para baixo */
+  margin: 147px auto 0; 
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+    max-width: 346px;
+  }
 `;
 
 export const PrimaryInput  = styled.input`
@@ -24,6 +29,10 @@ export const PrimaryInput  = styled.input`
   letter-spacing: 0px;
   color: #757575; 
   box-shadow: 0px 3px 6px #00000029; 
+
+  @media (max-width: 767px) {
+    font-size: 17px;
+  }
 `;
 
 const MagnifyingGlass = styled.img`
