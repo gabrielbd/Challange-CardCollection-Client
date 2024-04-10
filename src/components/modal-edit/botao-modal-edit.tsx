@@ -23,6 +23,10 @@ const Botao = styled.button`
   opacity: 1;
   border: none;
   cursor: pointer;
+  @media (max-width: 767px) {
+    margin-left: 0px;
+    margin-top: 10px;
+ }
 `;
 
 const BotaoModalEdit: React.FC<BotaoModalEditProps> = ({ handleClick }) => (

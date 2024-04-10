@@ -18,9 +18,7 @@ const ListContainer = styled.div`
 `;
 
 
-interface CardsListProps{
-}
-export function CardsList(props : CardsListProps){
+export function CardsList(){
     const {data} = useCards();
     return(
        <ListContainer>

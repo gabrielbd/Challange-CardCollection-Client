@@ -25,6 +25,9 @@ const Botao = styled.button`
   opacity: 1;
   border: none;
   cursor: pointer;
+  @media (max-width: 767px) {
+    margin-left: 0px;
+ }
 `;
 
 const BotaoCriarCard: React.FC<BotaoCriarCardProps> = ({ handleSubmit }) => (

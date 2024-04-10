@@ -1,11 +1,12 @@
 "use client"
-// edit-card-modal.tsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import BotaoModalEdit from './botao-modal-edit';
 import FormModalEdit from './form-modal-edit';
 import { putCard } from '@/Utils/edit-card';
 import { convertImageToBase64 } from '@/Utils/imageUtils'; 
+import { useQueryClient } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 
 
 interface ModalProps {
@@ -32,6 +33,10 @@ const ModalContent = styled.div`
   height: 767px;
   padding: 20px;
   position: relative;
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 100%;
+ }
 `;
 
 const CriarCard = styled.div`
@@ -101,8 +106,8 @@ export const EditarCardModal: React.FC<EditarCardModalProps> = ({ onClose, card 
         errorMsgCard = 'Preencha o nome do card.';
       } else if (!imageFile) {
         errorMsgImage = 'Selecione uma imagem para seu card.';
-      } else if (cardName.length < 3 || cardName.length > 30) {
-        errorMsgCard = 'O nome do card deve ter entre 3 e 30 caracteres.';
+      } else if (cardName.length < 3 || cardName.length > 20) {
+        errorMsgCard = 'O nome do card deve ter entre 3 e 20 caracteres.';
       } else if (!['image/png', 'image/jpeg'].includes(imageFile.type)) {
         errorMsgImage = 'A imagem deve estar no formato PNG ou JPEG.';
       }
@@ -112,7 +117,9 @@ export const EditarCardModal: React.FC<EditarCardModalProps> = ({ onClose, card 
   
       return !errorMsgImage && !errorMsgCard;
     };
-  
+    
+    const queryClient = useQueryClient();
+
     const handleSubmit = async () => {
         if (!validateFields()) {
           return;
@@ -128,8 +135,9 @@ export const EditarCardModal: React.FC<EditarCardModalProps> = ({ onClose, card 
           const editedCard = { ...card, name: cardName, status: status, base64: imageBase64 };
       
           const data = await putCard(editedCard.id, editedCard.name, editedCard.status, editedCard.base64);
+          queryClient.invalidateQueries(['cards']);
           console.log('Resposta da edição do card:', data);
-      
+          
           setErrorImage(null);
           onClose();
       
@@ -137,12 +145,13 @@ export const EditarCardModal: React.FC<EditarCardModalProps> = ({ onClose, card 
           console.error('Erro ao editar card', error);
         }
       };
-  
+
     const handleEditClick = () => {
       handleSubmit();
     };
   
     return (
+    <QueryClientProvider client={queryClient}>
       <ModalContainer onClick={handleBackgroundClick} isOpen={true}>
         <ModalContent>
           <CriarCard>
@@ -172,6 +181,8 @@ export const EditarCardModal: React.FC<EditarCardModalProps> = ({ onClose, card 
           <BotaoModalEdit handleClick={handleEditClick} />
         </ModalContent>
       </ModalContainer>
+    </QueryClientProvider>
+
     );
   };
   

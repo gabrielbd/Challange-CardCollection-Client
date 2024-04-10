@@ -19,11 +19,14 @@ const HeaderBase = styled.header`
 
 
 const TagHeader = styled.div`
-  padding: 14px 24px;
-  width: 100%;
-  background: linear-gradient(272deg, #ae276f 0%, #5f1478 100%);
-  box-shadow: 0px 3px 6px #00000029;
-  opacity: 1;
+position: fixed; 
+top: 0; 
+padding: 14px 24px;
+width: 100%;
+background: linear-gradient(272deg, #ae276f 0%, #5f1478 100%);
+box-shadow: 0px 3px 6px #00000029;
+opacity: 1;
+z-index: 999;
 `;
 
 

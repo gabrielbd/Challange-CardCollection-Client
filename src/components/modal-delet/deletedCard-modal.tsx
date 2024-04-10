@@ -1,6 +1,10 @@
 import { deletCard } from '@/Utils/delet-card';
 import React from 'react';
 import styled from 'styled-components';
+import { useQueryClient } from 'react-query';
+import { QueryClientProvider } from 'react-query';
+
+
 
 interface DeleteModalProps {
   onClose: () => void;
@@ -111,27 +115,33 @@ const Image = styled.img`
 
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ onClose, cardId }) => {
-  const handleDelete = () => {
-    const data =  deletCard(cardId)
-    console.log('Deletar card com ID:', data);
-    onClose(); // Fecha a modal após a deleção
-  };
+  
+  const queryClient = useQueryClient();
+
+  const handleDelete = async () => {
+    await deletCard(cardId); 
+    queryClient.invalidateQueries(['cards']);
+    onClose(); 
+  }
 
   return (
-    <ModalOverlay onClick={onClose}>
-      <ModalContainer onClick={(e) => e.stopPropagation()}>
-        <Circle>
-          <Image src="Icon-trash.svg" alt="Imagem" />
-        </Circle>
-        <Title>Excluir</Title>
-        <Description>Certeza que deseja excluir?</Description>
-        <HorizontalLine />
-        <ButtonContainer>
-          <DeleteButton onClick={handleDelete}>Excluir</DeleteButton>
-          <CancelButton onClick={onClose}>Cancelar</CancelButton>
-        </ButtonContainer>
-      </ModalContainer>
-    </ModalOverlay>
+    <QueryClientProvider client={queryClient}>
+      <ModalOverlay onClick={onClose}>
+        <ModalContainer onClick={(e) => e.stopPropagation()}>
+          <Circle>
+            <Image src="Icon-trash.svg" alt="Imagem" />
+          </Circle>
+          <Title>Excluir</Title>
+          <Description>Certeza que deseja excluir?</Description>
+          <HorizontalLine />
+          <ButtonContainer>
+            <DeleteButton onClick={handleDelete}>Excluir</DeleteButton>
+            <CancelButton onClick={onClose}>Cancelar</CancelButton>
+          </ButtonContainer>
+        </ModalContainer>
+      </ModalOverlay>
+    </QueryClientProvider>
+
   );
 };
 

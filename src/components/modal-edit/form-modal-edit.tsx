@@ -50,6 +50,9 @@ const Input = styled.input`
   letter-spacing: 0px;
   text-align: left;
   padding-left: 10px;
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const BotaoEscolherArquivo = styled.label`
@@ -75,6 +78,10 @@ const BotaoEscolherArquivo = styled.label`
   letter-spacing: 0px;
   color: #E76316;
   opacity: 1;
+  @media (max-width: 767px) {
+    width: 150px;
+    font-size: 13px;
+ }
 `;
 
 const FileInputContainer = styled.div`

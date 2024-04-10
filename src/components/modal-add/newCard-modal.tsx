@@ -1,11 +1,11 @@
-"use client"
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import FormularioCard from './form-modal';
 import BotaoCriarCard from './botao-modal';
 import { criarCard } from '@/Utils/add-card';
-import { convertImageToBase64 } from '@/Utils/imageUtils'; 
+import { convertImageToBase64 } from '@/Utils/imageUtils';
+import { useQueryClient } from 'react-query';
+import { QueryClientProvider } from 'react-query'; 
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,6 +31,10 @@ const ModalContent = styled.div`
   height: 767px;
   padding: 20px;
   position: relative;
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 100%;
+ }
 `;
 
 const CriarCard = styled.div`
@@ -87,8 +91,8 @@ const NewCardModal: React.FC<NewCardModalProps> = ({ onClose }) => {
       errorMsgCard = 'Preencha o nome do card.';
     } else if (!imageFile) {
       errorMsgImage = 'Selecione uma imagem para seu card.';
-    } else if (cardName.length < 3 || cardName.length > 30) {
-      errorMsgCard = 'O nome do card deve ter entre 3 e 30 caracteres.';
+    } else if (cardName.length < 3 || cardName.length > 20) {
+      errorMsgCard = 'O nome do card deve ter entre 3 e 20 caracteres.';
     } else if (!['image/png', 'image/jpeg'].includes(imageFile.type)) {
       errorMsgImage = 'A imagem deve estar no formato PNG ou JPEG.';
     }
@@ -99,6 +103,8 @@ const NewCardModal: React.FC<NewCardModalProps> = ({ onClose }) => {
     return !errorMsgImage && !errorMsgCard;
   };
 
+
+  const queryClient = useQueryClient();
   const handleSubmit = async () => {
     if (!validateFields()) {
       return;
@@ -109,6 +115,7 @@ const NewCardModal: React.FC<NewCardModalProps> = ({ onClose }) => {
       }
       const imageBase64 = await convertImageToBase64(imageFile); 
       const data = await criarCard(cardName, imageBase64);
+      queryClient.invalidateQueries(['cards']);
       onClose();
       console.log('Resposta da criação do card:', data);
       setErrorImage(null);
@@ -125,6 +132,7 @@ const NewCardModal: React.FC<NewCardModalProps> = ({ onClose }) => {
   };
 
   return (
+    <QueryClientProvider client={queryClient}>
     <ModalContainer onClick={handleBackgroundClick} isOpen={true}>
       <ModalContent>
         <CriarCard>
@@ -146,10 +154,11 @@ const NewCardModal: React.FC<NewCardModalProps> = ({ onClose }) => {
           errorImage={errorImage}
           errorCard={errorCard}
         />
-
         <BotaoCriarCard handleSubmit={handleSubmit} />
       </ModalContent>
     </ModalContainer>
+    </QueryClientProvider>
+
   );
 };
 
