@@ -1,7 +1,7 @@
 
 export const mountQueryPagination = (page: number) => {
   if(page !== null && page !== 0) return `query {
-    consultarTodosPagination(page:${page}, pageSize:5) {
+    consultarTodosPagination(page:${page}, pageSize:10) {
       name
       idCar
       status
@@ -10,7 +10,7 @@ export const mountQueryPagination = (page: number) => {
     }
   }`
   return `query {
-    consultarTodosPagination(page:1, pageSize:5) {
+    consultarTodosPagination(page:1, pageSize:10) {
       name
       idCar
       status
