@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { EditarCardModal } from "../modal-edit/editCard-modal";
+import DeleteCardModal  from "../modal-delet/deletedCard-modal";
 
 interface CardProps {
   name: string;
@@ -36,10 +37,10 @@ const Line = styled.div`
 `;
 const VerticalLine = styled.div`
   height: 25px;
-  width: 0px; 
-  border-left: 1px solid #f0eff0; 
-  margin-left: 10px; 
-  margin-right: 10px; 
+  width: 0px;
+  border-left: 1px solid #f0eff0;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 10px;
 `;
 
@@ -115,37 +116,41 @@ const IconDelet = styled.img`
 
 export function Card(props: CardProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  const Image = styled.div<{ imageUrl: string }>`
-    width: 95px;
-    height: 95px;
-    background-image: ${(props) => `url(${props.imageUrl})`};
-    background-size: cover;
-    background-position: center;
-    border: 1px solid #e4e4e4;
-    border-radius: 50%;
-  `;
-
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const base64Url = `data:image/jpeg;base64,${props.base64}`;
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
+  const handleDeleteClick = () => {
+    setIsDeleting(true);
+  };
+
   return (
     <CardStyle>
       {props.status === "1" ? <StatusAtivo /> : <StatusInativo />}
-      
-      <Image imageUrl={base64Url}></Image>
+
+      <div
+        style={{
+          width: "95px",
+          height: "95px",
+          backgroundImage: `url(${base64Url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          border: "1px solid #e4e4e4",
+          borderRadius: "50%",
+        }}
+      ></div>
       <Line />
       <Description>{props.name}</Description>
       <Buttons>
         <Button onClick={handleEditClick}>
-          <IconEdit src="/Icon-edit.svg" alt="edit"/>
+          <IconEdit src="/Icon-edit.svg" alt="edit" />
           Editar
         </Button>
-        <VerticalLine/>
-        <Button>
+        <VerticalLine />
+        <Button onClick={handleDeleteClick}>
           <IconDelet src="/Icon-trash.svg" alt="edit" />
           Excluir
         </Button>
@@ -161,6 +166,14 @@ export function Card(props: CardProps) {
           }}
         />
       )}
+      {isDeleting && (
+        <DeleteCardModal
+          onClose={() => setIsDeleting(false)}
+          cardId={props.idCar}
+        />
+      )}
     </CardStyle>
   );
 }
+
+export default Card;
