@@ -1,11 +1,11 @@
-import { Header } from "@/components/header";
+import { Header } from "@/components/header/header";
 import { Mulish } from "next/font/google";
 
 import "./globals.css";
 import { FilterContextProvider } from "@/contexts/filter-context";
 
 const mulish  = Mulish({
-    weight:['300','400','500','600'],
+    weight:['300','400','500','600','700'],
     subsets: ["latin"]
    });
 
