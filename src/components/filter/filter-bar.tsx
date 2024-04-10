@@ -3,7 +3,9 @@
 import { useFilter } from "@/hooks/useFilter";
 import { FilterType } from "@/types/filter-types";
 import { styled } from "styled-components";
-import {ReactNode, createContext, useState } from "react";
+import { useState } from "react";
+import NewCardModal from "../modal-add/newCard-modal";
+
 
 
 interface FilterBarProps {
@@ -13,6 +15,7 @@ interface FilterBarProps {
 const FilterContainer = styled.div`
     display: flex;
     max-width: 1046px;
+    margin-top: 50px;
     width: 100%;
     align-items: start;
     justify-content: space-between;
@@ -102,9 +105,13 @@ const PriorityFilter = styled.ul`
 export function FilterBar(props: FilterBarProps) {
     
     const{setType} = useFilter();
-
-
     const[isOpen, SetIsOpen] = useState(false);
+
+    const [isOpenCard, setIsOpenCard] = useState(false);
+    const handleOpenCard = () => setIsOpenCard(true);
+    const handleCloseCard = () => setIsOpenCard(false);
+
+    
     const handleOpen = () => SetIsOpen(prev => !prev)
 
     const handleChangeType = (value: FilterType) =>{
@@ -122,12 +129,12 @@ export function FilterBar(props: FilterBarProps) {
             <PriorityFilter>
                 <li onClick={() => handleChangeType(FilterType.ALL)}>Sem Filtro</li>
                 <li onClick={() => handleChangeType(FilterType.ACTIVATED)}>Cards - Ativados</li>
-                <li onClick={() => handleChangeType(FilterType.DISABLED)}>Cards - Desativados</li>
-            </PriorityFilter>
-        }
+                <li onClick={() => handleChangeType(FilterType.DISABLED)}>Cards - Inativados</li>
+            </PriorityFilter>}
         </FilterContainerPriority>
 
-        <NewCardButton>Novo Card</NewCardButton>
+        <NewCardButton onClick={handleOpenCard}>Novo Card</NewCardButton>
+        {isOpenCard && <NewCardModal onClose={handleCloseCard} />}
       </FilterContainer>
     );
   }

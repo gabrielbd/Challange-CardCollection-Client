@@ -14,7 +14,6 @@ const HeaderBase = styled.header`
     align-items: center;
     flex-direction: column;
     width: 100%; 
-    max-width: 1440px;
     margin: 0 auto; 
 `;
 
@@ -50,7 +49,7 @@ export function Header(props : HeaderProps){
         <HeaderBase>
            <TagHeader>
             <StyledImage
-              src="/logo-teste.svg"
+              src="/logo-teste.png"
               alt="Logo"
               width={192}
               height={37}
