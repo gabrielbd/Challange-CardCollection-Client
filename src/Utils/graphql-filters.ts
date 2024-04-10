@@ -1,21 +1,29 @@
-import { FilterType } from "@/types/filter-types"
-import { getStatusType } from "./get-status-type"
+
+export const mountQueryPagination = (page: number) => {
+  if(page !== null && page !== 0) return `query {
+    consultarTodosPagination(page:${page}, pageSize:5) {
+      name
+      idCar
+      status
+      idPhoto
+      base64
+    }
+  }`
+  return `query {
+    consultarTodosPagination(page:1, pageSize:5) {
+      name
+      idCar
+      status
+      idPhoto
+      base64
+    }
+  }`
+}
 
 
-
-
-export const mountQuery = (type: FilterType) => {
-    if(type === FilterType.ALL) return `query {
-      consultarTodos {
-        name
-        idCar
-        status
-        idPhoto
-        base64
-      }
-    }`
+export const mountQuery = () => {
     return `query {
-      consultarTodos (where: {status:{ eq: "${getStatusType(type)}"}} ) {
+      consultarTodos {
         name
         idCar
         status

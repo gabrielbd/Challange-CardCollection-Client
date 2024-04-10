@@ -1,9 +1,8 @@
 import { CardsFetchResponse } from "@/types/cards-response";
-import axios, { Axios, AxiosPromise } from "axios";
+import axios, { AxiosPromise } from "axios";
 import { useQuery } from "react-query";
 import { useFilter } from "./useFilter";
-import { mountQuery } from "@/Utils/graphql-filters";
-import { useDeferredValue } from "react";
+import { mountQuery, mountQueryPagination } from "@/Utils/graphql-filters";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
@@ -13,18 +12,34 @@ const fetcher = (query: string): AxiosPromise<CardsFetchResponse> => {
 
 
 export function useCards(){
-  const { type , search } = useFilter()
-  const searchDeferred = useDeferredValue(search)
-  const query = mountQuery(type)
-    const{data, } = useQuery({
+    const { search } = useFilter()
+    const { page }  = useFilter()
+    if(search !== null && search !== "")
+    {
+        const query = mountQuery()
+        const { data } = useQuery({
         queryFn: () => fetcher(query),
-        queryKey: ['cards', type]
-    })
+        queryKey: ['cards']
+         })
+        const cardsAll = data?.data?.data?.consultarTodos
+        let filteredCards = null;
 
-    const cardsAll = data?.data?.data?.consultarTodos
-    const filteredCards = cardsAll?.filter(cardsAll => cardsAll.name.toLowerCase().includes(searchDeferred.toLowerCase()))
-
-    return{
+        if (search !== null && search !== "") {
+      filteredCards = cardsAll?.filter(cardsAll => cardsAll.name.toLowerCase().includes(search.toLowerCase()))
+        }
+        return {
         data: filteredCards
+        }
+    }else{
+        const query = mountQueryPagination(page)
+        const{data, } = useQuery({
+          queryFn: () => fetcher(query),
+          queryKey: ['cards', page]
+        }) 
+        const cardsAll = data?.data?.data?.consultarTodosPagination
+        return{
+            data : cardsAll
+        }
     }
-}
+    
+  }

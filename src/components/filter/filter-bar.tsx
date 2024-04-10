@@ -1,7 +1,6 @@
 "use client"
 
 import { useFilter } from "@/hooks/useFilter";
-import { FilterType } from "@/types/filter-types";
 import { styled } from "styled-components";
 import { useState } from "react";
 import NewCardModal from "../modal-add/newCard-modal";
@@ -74,63 +73,46 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    @media (max-width: 767px) {
-        display: none;
-    }
 }
 `;
-const PriorityFilter = styled.ul`
-    position: absolute;
+const PageNavigation = styled.div`
+  display: flex;
+  align-items: center;
+  @media (max-width: 767px) {
+    margin-right: 28px;
+    display: flex;
     align-items: center;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    padding: 12px 16px;
-    z-index: 999;
+}
+`;
 
-    list-style: none;
-    li {
-        color: var(--text-dark);
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 22px;
-        cursor: pointer;
-    }
-    li + li {
-        margin-top: 4px;
-    }
+const PageNumber = styled.span`
+  font-size: 20px;
+  margin: 0 10px;
 `;
 
 export function FilterBar(props: FilterBarProps) {
     
-    const{setType} = useFilter();
-    const[isOpen, SetIsOpen] = useState(false);
-
+    const{setPage} = useFilter();
+    const [currentPage, setCurrentPage] = useState(1);
     const [isOpenCard, setIsOpenCard] = useState(false);
     const handleOpenCard = () => setIsOpenCard(true);
     const handleCloseCard = () => setIsOpenCard(false);
 
-    
-    const handleOpen = () => SetIsOpen(prev => !prev)
-
-    const handleChangeType = (value: FilterType) =>{
-        setType(value)
-        SetIsOpen(false)
-    }
+    const goToPage = (page: number) => {
+        setPage(page);
+        setCurrentPage(page);
+      };
     return (
       <FilterContainer>
         <ResultText>Resultado de busca</ResultText>
         <FilterContainerPriority>
-            <button onClick={handleOpen}>
-                Filtrar por Status
-            </button>
-            {isOpen && 
-            <PriorityFilter>
-                <li onClick={() => handleChangeType(FilterType.ALL)}>Sem Filtro</li>
-                <li onClick={() => handleChangeType(FilterType.ACTIVATED)}>Cards - Ativados</li>
-                <li onClick={() => handleChangeType(FilterType.DISABLED)}>Cards - Inativados</li>
-            </PriorityFilter>}
+            <PageNavigation>
+                <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>
+                {'<'}
+                </button>
+                <PageNumber>{currentPage}</PageNumber>
+                <button onClick={() => goToPage(currentPage + 1)}>{'>'}</button>
+            </PageNavigation>
         </FilterContainerPriority>
 
         <NewCardButton onClick={handleOpenCard}>Novo Card</NewCardButton>
