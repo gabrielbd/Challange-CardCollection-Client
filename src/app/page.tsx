@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import styles from './page.module.css'
-import { FilterBar } from '@/components/filter-bar'
-import { CardsList } from '@/components/cards-list';
+import { FilterBar } from '@/components/filter/filter-bar'
+import { CardsList } from '@/components/card-list/cards-list';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 export default function Home() {
