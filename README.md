@@ -5,7 +5,7 @@ Welcome to my repository.
 
 
 
-![Prototype](./.github/prototype.png)
+![Prototype](/github/prototype.png)
 
 # 💻 About
 
@@ -20,7 +20,7 @@ This project is consuming a GraphQL API service in .NET 6.
 ### Frontend
 
 
-- Download and Install Node [Link download](https://nodejs.org/en/download)
+- Download and Install [Node](https://nodejs.org/en/download)
 
 1. Clone this repo
 ```bash
