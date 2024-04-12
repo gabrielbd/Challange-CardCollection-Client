@@ -24,7 +24,7 @@ This project is consuming a GraphQL API service in .NET 6.
 
 1. Clone this repo
 ```bash
-git clone https://github.com/gabrielbd/Challange-CardCollection-Client.git
+git clone https://github.com/gabrielbd/Challenge-CardCollection-Client.git
 ```
 
 2. Go to the project folder
